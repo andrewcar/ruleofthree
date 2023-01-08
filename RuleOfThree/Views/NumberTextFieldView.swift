@@ -13,10 +13,11 @@ struct NumberTextFieldView: View {
     
     var body: some View {
         TextField("", text: $numberString)
-            .frame(width: screen.width * 0.3, height: screen.width * 0.3)
+            .frame(width: UIDevice.current.userInterfaceIdiom == .pad ? screen.width * 0.4 : screen.width * 0.3,
+                   height: UIDevice.current.userInterfaceIdiom == .pad ? screen.width * 0.4 : screen.width * 0.3)
             .foregroundColor(Color("numberText"))
             .multilineTextAlignment(.center)
-            .font(.system(size: 69))
+            .font(.system(size: UIDevice.current.userInterfaceIdiom == .pad ? 88 : 69))
             .fontWeight(.bold)
             .scaledToFit()
             .minimumScaleFactor(0.01)

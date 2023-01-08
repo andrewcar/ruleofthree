@@ -44,6 +44,7 @@ struct ContainerView: View {
                         NumberTextFieldView(numberString: $topLeftNumberString)
                             .focused($focusedField, equals: .topLeft)
                             .submitLabel(.next)
+                            .border(.red)
                         DividerView()
                         NumberTextFieldView(numberString: $bottomLeftNumberString)
                             .focused($focusedField, equals: .bottomLeft)
@@ -76,6 +77,9 @@ struct ContainerView: View {
         .background(Color("background"))
         .onShake {
             reset()
+        }
+        .onAppear {
+            focusedField = .topLeft
         }
     }
     
