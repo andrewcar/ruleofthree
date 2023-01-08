@@ -40,11 +40,10 @@ struct ContainerView: View {
         ZStack {
             VStack {
                 HStack(spacing: 10) {
-                    VStack {
+                    VStack(spacing: 0) {
                         NumberTextFieldView(numberString: $topLeftNumberString)
                             .focused($focusedField, equals: .topLeft)
                             .submitLabel(.next)
-                            .border(.red)
                         DividerView()
                         NumberTextFieldView(numberString: $bottomLeftNumberString)
                             .focused($focusedField, equals: .bottomLeft)

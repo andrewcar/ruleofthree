@@ -10,6 +10,7 @@ import SwiftUI
 struct NumberTextFieldView: View {
     
     @Binding var numberString: String
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         TextField("", text: $numberString)
@@ -23,5 +24,9 @@ struct NumberTextFieldView: View {
             .minimumScaleFactor(0.01)
             .lineLimit(1)
             .keyboardType(.decimalPad)
+            .focused($isFocused)
+            .onTapGesture {
+                isFocused = true
+            }
     }
 }
