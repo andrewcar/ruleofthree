@@ -44,25 +44,38 @@ struct ContainerView: View {
                         NumberTextFieldView(numberString: $topLeftNumberString)
                             .focused($focusedField, equals: .topLeft)
                             .submitLabel(.next)
+                            .onChange(of: topLeftNumberString) { _ in
+                                updateResult()
+                            }
                         DividerView()
                         NumberTextFieldView(numberString: $bottomLeftNumberString)
                             .focused($focusedField, equals: .bottomLeft)
                             .submitLabel(.next)
+                            .onChange(of: bottomLeftNumberString) { _ in
+                                updateResult()
+                            }
                     }
                     .onSubmit {
                         updateFocusedField()
+                        updateResult()
                     }
                     EqualsView()
                     VStack {
                         NumberTextFieldView(numberString: $topRightNumberString)
                             .focused($focusedField, equals: .topRight)
                             .submitLabel(.go)
+                            .onChange(of: topRightNumberString) { _ in
+                                updateResult()
+                            }
                         DividerView()
                         NumberTextFieldView(numberString: $bottomRightNumberString)
+                            .onChange(of: bottomRightNumberString) { _ in
+                                updateResult()
+                            }
                     }
                     .onSubmit {
                         focusedField = nil
-                        bottomRightNumberString = resultNumberString
+                        updateResult()
                     }
                 }
             }
@@ -94,13 +107,17 @@ struct ContainerView: View {
                 bottomRightNumberString = resultNumberString
             }
         } label: {
-            Text(focusedField == .topRight ? "Solve" : "Next")
+            Text(!topLeftNumberString.isEmpty && !bottomLeftNumberString.isEmpty && !topRightNumberString.isEmpty ? "Solve" : "Next")
                 .frame(width: screen.width - 10, height: 50)
                 .foregroundColor(Color("nextButtonText"))
                 .background(Color("nextButtonBackground"))
                 .cornerRadius(7)
         }
         .offset(y: focusedField == nil ? screen.height : -(keyboardHeightHelper.keyboardHeight / 1.5))
+    }
+    
+    private func updateResult() {
+        bottomRightNumberString = resultNumberString
     }
     
     private func updateFocusedField() {
